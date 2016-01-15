@@ -25,3 +25,9 @@ it then removes the number of seams as specified in the initial txt file.
 
 Returning an array with the row length decreased by the number of seams required. The array is returned to the command
 line.
+
+FUTURE WORK.
+-------------------------
+
+Initial seam carving algorithm is set up to find minimum path through an array. Now need to use this on an image to be 
+able to reduce the image size using seam carving.
