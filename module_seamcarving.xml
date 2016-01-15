@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_seamcarving" default="compile.module.seamcarving">
+  <dirname property="module.seamcarving.basedir" file="${ant.file.module_seamcarving}"/>
+  
+  <property name="module.jdk.home.seamcarving" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.seamcarving" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.seamcarving" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.seamcarving" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="seamcarving.output.dir" value="${module.seamcarving.basedir}/out/production/SeamCarving"/>
+  <property name="seamcarving.testoutput.dir" value="${module.seamcarving.basedir}/out/test/SeamCarving"/>
+  
+  <path id="seamcarving.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="seamcarving.module.production.classpath">
+    <path refid="${module.jdk.classpath.seamcarving}"/>
+  </path>
+  
+  <path id="seamcarving.runtime.production.module.classpath">
+    <pathelement location="${seamcarving.output.dir}"/>
+  </path>
+  
+  <path id="seamcarving.module.classpath">
+    <path refid="${module.jdk.classpath.seamcarving}"/>
+    <pathelement location="${seamcarving.output.dir}"/>
+  </path>
+  
+  <path id="seamcarving.runtime.module.classpath">
+    <pathelement location="${seamcarving.testoutput.dir}"/>
+    <pathelement location="${seamcarving.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.seamcarving">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.seamcarving">
+    <patternset refid="excluded.from.module.seamcarving"/>
+  </patternset>
+  
+  <path id="seamcarving.module.sourcepath">
+    <dirset dir="${module.seamcarving.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.seamcarving" depends="compile.module.seamcarving.production,compile.module.seamcarving.tests" description="Compile module SeamCarving"/>
+  
+  <target name="compile.module.seamcarving.production" depends="register.custom.compilers" description="Compile module SeamCarving; production classes">
+    <mkdir dir="${seamcarving.output.dir}"/>
+    <javac2 destdir="${seamcarving.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.seamcarving}/javac">
+      <compilerarg line="${compiler.args.seamcarving}"/>
+      <bootclasspath refid="seamcarving.module.bootclasspath"/>
+      <classpath refid="seamcarving.module.production.classpath"/>
+      <src refid="seamcarving.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.seamcarving"/>
+    </javac2>
+    
+    <copy todir="${seamcarving.output.dir}">
+      <fileset dir="${module.seamcarving.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.seamcarving.tests" depends="register.custom.compilers,compile.module.seamcarving.production" description="compile module SeamCarving; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.seamcarving" description="cleanup module">
+    <delete dir="${seamcarving.output.dir}"/>
+    <delete dir="${seamcarving.testoutput.dir}"/>
+  </target>
+</project>

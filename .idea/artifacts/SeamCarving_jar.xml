@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SeamCarving:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SeamCarving_jar</output-path>
+    <root id="archive" name="SeamCarving.jar">
+      <element id="module-output" name="SeamCarving" />
+    </root>
+  </artifact>
+</component>
